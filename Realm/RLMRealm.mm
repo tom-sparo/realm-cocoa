@@ -356,7 +356,7 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
                 return nil;
             }
 
-            if (!dynamic) {
+            if (!dynamic || configuration.customSchema) {
                 RLMRealmCreateAccessors(realm.schema);
             }
         }
