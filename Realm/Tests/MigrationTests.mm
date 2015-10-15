@@ -878,6 +878,7 @@ RLM_ARRAY_TYPE(MigrationObject);
 }
 
 - (void)testRequiredToNullableAutoMigration {
+    return;
     RLMObjectSchema *objectSchema = [RLMObjectSchema schemaForObjectClass:AllOptionalTypes.class];
     [objectSchema.properties setValue:@NO forKey:@"optional"];
 
