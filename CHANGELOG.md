@@ -11,7 +11,7 @@ x.x.x Release notes (yyyy-MM-dd)
 
 ### Bugfixes
 
-* None.
+* Fix crash when using optional Int16/Int32/Int64 properties in Swift.
 
 0.96.0 Release notes (2015-10-14)
 =============================================================
