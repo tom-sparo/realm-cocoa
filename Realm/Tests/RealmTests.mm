@@ -1231,15 +1231,22 @@ extern "C" {
     RLMRealm *realm = self.realmWithTestPath;
     [realm transactionWithBlock:^{
         [StringObject createInRealm:realm withValue:@[@"A"]];
-        [StringObject createInRealm:realm withValue:@[@"A"]];
+        [StringObject createInRealm:realm withValue:@[@"B"]];
     }];
     auto fileSize = ^(NSString *path) {
         NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
         return [(NSNumber *)attributes[NSFileSize] unsignedLongLongValue];
     };
     unsigned long long fileSizeBefore = fileSize(realm.path);
+    StringObject *object = [StringObject allObjectsInRealm:realm].firstObject;
+
     XCTAssertTrue([realm compact]);
+
+    XCTAssertTrue(object.isInvalidated);
     XCTAssertEqual([[StringObject allObjectsInRealm:realm] count], 2U);
+    XCTAssertEqualObjects(@"A", [[StringObject allObjectsInRealm:realm].firstObject stringCol]);
+    XCTAssertEqualObjects(@"B", [[StringObject allObjectsInRealm:realm].lastObject stringCol]);
+
     unsigned long long fileSizeAfter = fileSize(realm.path);
     XCTAssertGreaterThan(fileSizeBefore, fileSizeAfter);
 }
